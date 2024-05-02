@@ -1,4 +1,6 @@
-  <?php namespace App\Controllers;
+<?php 
+
+namespace App\Controllers;
 
  use CodeIgniter\Controller;
 
@@ -17,7 +19,7 @@
          return view('index');
      }
 
-     public function surveyss()
+     public function surveys()
      {
          return view('surveys');
      }

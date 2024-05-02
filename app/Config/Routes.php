@@ -6,5 +6,5 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 #$routes->get('/', 'Home::index');
-$routes->get('/', 'ResumeController::index');
-$routes->get('/surveys', 'ResumeController::surveys');
+$routes->get('/', 'EvalController::index');
+$routes->get('/surveys', 'EvalController::surveys');
