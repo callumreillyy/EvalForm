@@ -43,7 +43,7 @@ class EvalDataSeeder extends Seeder
            $this->db->table('Surveys')->insert([
                'user_id' => $userId,
                'title' => "Survey $userId Title",
-               'description' => "Description of Survey $userId.",
+               'description' => "Description of Survey $userId",
                'respondants_count' => 0,
                'created_at' => date('Y-m-d H:i:s')
            ]);
