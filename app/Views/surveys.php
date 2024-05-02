@@ -52,6 +52,7 @@
   </div>
 
   <script>
+    const featuredSurveys = <?php echo json_encode($surveys['surveys']); ?>;
     const searchInput = document.getElementById('searchInput');
     const surveyList = document.getElementById('surveyList');
 
@@ -60,13 +61,6 @@
         const keyword = searchInput.value.toLowerCase();
         // Clear previous search results
         surveyList.innerHTML = '';
-        // Simulated list of featured surveys
-        const featuredSurveys = [
-            { title: 'Survey Title 1', description: 'Description of Survey 1' },
-            { title: 'Survey Title 2', description: 'Description of Survey 2' },
-            { title: 'Survey Title 3', description: 'Description of Survey 3' },
-            { title: 'Survey Title 4', description: 'Description of Survey 4' }
-        ];
         // Filter surveys based on keyword
         const filteredSurveys = featuredSurveys.filter(survey => survey.title.toLowerCase().includes(keyword) || survey.description.toLowerCase().includes(keyword));
         // Display search results
