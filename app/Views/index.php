@@ -22,7 +22,7 @@
             </svg>
           </button>
             <div class="hidden md:flex items-center space-x-4">
-                <a href="#" class="text-white">Home</a>
+                <a href=<?= base_url(); ?> class="text-white">Home</a>
                 <a href="#" class="text-white">Dashboard</a>
                 <a href=<?= base_url('surveys'); ?> class="text-white">Surveys</a>
                 <a href="#" class="text-white">Login</a>
