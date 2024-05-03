@@ -50,4 +50,19 @@ namespace App\Controllers;
  
          return view('surveys', $data);
      }
- }
+    // reference lab 3
+     //
+    public function admin()
+    {
+    // Creates an instance of the UserModel class.
+    $model = new \App\Models\UserModel();
+
+    // Prepares to fetch data from the database using the UserModel.
+    // The data fetched will be stored in the array `$data` under the key 'users'.
+    $data['users'] = $model->orderBy('name', 'ASC')                             
+                           ->where('status', 'active') 
+                           ->findAll(); 
+
+    return view('admin', $data);
+    }
+}

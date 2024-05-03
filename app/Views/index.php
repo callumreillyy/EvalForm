@@ -8,7 +8,7 @@
               <h1 class="text-white text-9xl font-bold">EvalForm</h1>
               <h2 class="text-white text-4xl font-bold">Streamlined Survey Distribution</h2>
           </div>
-          <img src="home-image.png" alt="Placeholder Image" class="px-4 py-10 w-1/2 lg:h-screen lg:w-full">
+          <img src=<?= base_url('public/assets/images/home-image.png'); ?> alt="Placeholder Image" class="px-4 py-10 w-1/2 lg:h-screen lg:w-full">
       </div>
     </div>
 
