@@ -3,12 +3,12 @@
 
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-8 flex flex-col justify-center items-center h-full">
-      <div class="flex flex-col justify-center items-center md:flex-row">
+      <div class="flex flex-col justify-center items-center lg:flex-row">
           <div class="px-4 text-center md:text-left">
               <h1 class="text-white text-9xl font-bold">EvalForm</h1>
               <h2 class="text-white text-4xl font-bold">Streamlined Survey Distribution</h2>
           </div>
-          <img src=<?= base_url('public/assets/images/home-image.png'); ?> alt="Placeholder Image" class="px-4 py-10 w-1/2 lg:h-screen lg:w-full">
+          <img src= "<?= base_url('images/home-image.png'); ?>" alt="Placeholder Image" class="px-4 py-10 w-1/2 xl:h-screen lx:w-full">
       </div>
     </div>
 
