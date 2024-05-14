@@ -10,5 +10,5 @@ class OptionsModel extends Model
     protected $primaryKey = 'option_id'; 
     protected $allowedFields = ['option', 'selected'];
     protected $returnType = 'array';
-
+    protected $useTimestamps = true;
 }
