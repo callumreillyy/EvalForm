@@ -162,4 +162,18 @@ namespace App\Controllers;
 
         return view('addedit', $data);
     }
+
+    public function delete($id)
+     {
+        $model = new \App\Models\UserModel();
+
+        if ($model->delete($id)) {
+            $this->session->setFlashdata('success', 'User deleted successfully.');
+        } else {
+            $this->session->setFlashdata('error', 'Failed to delete user. Please try again.');
+        }
+
+        return redirect()->to('/admin');
+     }
+
 }
