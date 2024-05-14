@@ -37,7 +37,7 @@
    
     <footer class="bg-gray-800 text-white py-4">
       <div class="container mx-auto flex justify-between items-center">
-        <span class="text-sm">&copy; 2024 EvalForm</span>
+        <span class="text-sm">&copy; <?= date('Y') ?></span>
         <nav>
           <a href="#" class="text-sm text-gray-300 hover:text-white mr-4">Home</a>
           <a href="#" class="text-sm text-gray-300 hover:text-white mr-4">Dashboard</a>
