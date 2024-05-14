@@ -8,6 +8,7 @@ use CodeIgniter\Router\RouteCollection;
 #$routes->get('/', 'Home::index');
 $routes->get('/', 'EvalController::index');
 $routes->get('/surveys', 'EvalController::surveys');
+$routes->get('/admin', 'EvalController::admin');
 // Routes for admin
 // REF prac5: https://alt-5fd17f67f4120.blackboard.com/
 // bbcswebdav/pid-9844314-dt-content-rid-60958335_1/
