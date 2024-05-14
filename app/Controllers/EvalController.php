@@ -70,23 +70,17 @@ namespace App\Controllers;
                 // Generate a search condition for each field using LIKE operator
                 $conditions[] = "$field LIKE '%$search%'";
             }
-            
             // Implode the conditions array with OR operator to create a single search clause
             $whereClause = implode(' OR ', $conditions);
             
-            // Retrieve users matching the search conditions, order by name in ascending order
             $users = $model->where($whereClause)->orderBy('name', 'ASC')->findAll();
         } else {
             // If no search query is provided
-            
             // Retrieve all users, order by name in ascending order
             $users = $model->orderBy('name', 'ASC')->findAll();
         }
-        
-        // Store the retrieved users in the $data array
+
         $data['users'] = $users;
-        
-        // Load the 'admin' view and pass the $data array to it
         return view('admin', $data);
     }
     

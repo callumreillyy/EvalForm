@@ -23,10 +23,10 @@
           </svg>
         </button>
         <div class="hidden md:flex items-center space-x-4">
-          <a class="text-white" href=<?= base_url(); ?>>Home</a>
-          <a class="text-white" href=<?= base_url('admin'); ?>>Admin</a>
-          <a class="text-white" href=<?= base_url('surveys'); ?>>Surveys</a>
-          <a class="text-white" href=<?= base_url('login'); ?>>Login</a>
+          <a class="text-white <?= service('router')->getMatchedRoute()[0] == '/' ? 'active' : ''; ?>" href="<?= base_url(); ?>">Home</a>
+          <a class="text-white <?= service('router')->getMatchedRoute()[0] == 'admin' ? 'active' : ''; ?>" href="<?= base_url('admin'); ?>">Admin</a>
+          <a class="text-white <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys'); ?>">Surveys</a>
+          <a class="text-white <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url('login'); ?>">Login</a>
         </div>
       </div>
     </nav>
