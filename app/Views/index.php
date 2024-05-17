@@ -15,7 +15,7 @@
   <div class="bg-gray-100 mx-auto px-4 py-8 flex justify-center items-center h-screen">
     <div class="px-4">
       <h1 class="text-blue-800 text-9xl font-bold">Start collecting feedback now!</h1>
-      <button class="bg-blue-100 text-blue-800 font-bold text-2xl py-4 px-6 rounded mt-8">Create Your First Survey</button>
+      <a class="bg-blue-100 text-blue-800 font-bold text-2xl py-4 px-6 rounded mt-8 <?= service('router')->getMatchedRoute()[0] == '/create-survey' ? 'active' : ''; ?>" href="<?= base_url('create-survey'); ?>">Create Your First Survey</a>
     </div>
   </div>
 

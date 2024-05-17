@@ -25,4 +25,10 @@ $routes->get('/dashboard', 'EvalController::dashboard');
 $routes->get('/statistics', 'EvalController::statistics');
 $routes->get('/login', 'EvalController::login');
 $routes->get('/signup', 'EvalController::signup');
-$routes->get('/survey', 'EvalController::survey');
+$routes->get('/create-survey', 'EvalController::createSurvey');
+
+$routes->resource('survey');
+$routes->resource('textQuestion');
+$routes->resource('multipleQuestion');
+$routes->resource('option');
+

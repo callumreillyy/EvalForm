@@ -116,9 +116,9 @@ namespace App\Controllers;
         return view('signup');
     }
 
-    public function survey()
+    public function createSurvey()
     {
-        return view('survey');
+        return view('create_survey');
     }
 
     // controller to handle add/edit requests for users.
