@@ -17,12 +17,6 @@ class SurveyQuestionSedder extends Seeder
                 'created_at' => date('Y-m-d H:i:s')
 
             ],
-            [
-                'name' => 'User30 Lastname40',
-                'email' => 'user30@example.com',
-                'phone' => '123-456-2311',
-                'created_at' => date('Y-m-d H:i:s')
-            ]
         ];
 
         $userIds = []; 
@@ -35,16 +29,19 @@ class SurveyQuestionSedder extends Seeder
         $surveyIds = [];
 
         foreach ($userIds as $userId) {
+            for($i = 0; $i <= 50; $i++) {
             // Insert survey data
-            $this->db->table('Surveys')->insert([
-                'user_id' => $userId,
-                'title' => "Survey $userId Title",
-                'description' => "Description of Survey $userId",
-                'respondants' => 0,
-                'created_at' => date('Y-m-d H:i:s')
-            ]);
-            $surveyIds[] = $this->db->insertID();
+                $this->db->table('Surveys')->insert([
+                    'user_id' => $userId,
+                    'title' => "Survey by $userId Title",
+                    'description' => "Description of survey created by user $userId",
+                    'respondants' => 0,
+                    'created_at' => date('Y-m-d H:i:s')
+                ]);
+                $surveyIds[] = $this->db->insertID();
+            }
         }
+
         
         
         foreach ($surveyIds as $surveyId) {

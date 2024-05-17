@@ -34,9 +34,10 @@ namespace App\Controllers;
             throw new \CodeIgniter\Exceptions\PageNotFoundException('User Not Found');
         }
     
-        // Fetch related data
-        $data['surveys'] = $surveyModel->where('user_id', $user_id)->findAll();
-        
+        // Fetch related data with pagination (4 surveys per page)
+        $data['surveys'] = $surveyModel->where('user_id', $user_id)->paginate(4);
+        $data['pager'] = $surveyModel->pager;
+
         return view('surveys', $data);
     }
     // revised as per lab 5
