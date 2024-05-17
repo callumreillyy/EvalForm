@@ -12,6 +12,8 @@ namespace App\Controllers;
         // Adding this within the __construct() function will make it 
         // available to all views in the ResumeController
         helper('url'); 
+
+        $this->session = session();
     }
 
     public function index()
@@ -127,41 +129,36 @@ namespace App\Controllers;
     // lab5.html?one_hash=A1C879437DCC5CBDD5C5FF2B03460DE5&f
     // _hash=33A9693F1E2B930E96013FF53B363A58
     public function addedit($id = null)
-    {
-        $model = new \App\Models\UserModel();
+     {
+         $model = new \App\Models\UserModel();
 
-        // Check if the request is a POST request (form submission).
-        if ($this->request->getMethod() === 'post') {
-            // Retrieve the submitted form data.
-            $data = $this->request->getPost();
+         // debugging request string
+         // print($this->request->getMethod());
 
-            // If no ID is provided, it's an add operation.
-            if ($id === null) {
-                if ($model->insert($data)) {
-                    // success
-                    $this->session->setFlashdata('success', 'User added successfully.');
-                } else {
-                    // error
-                    $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
-                }
-            } else {
-                // If an ID is provided, it's an edit operation.
-                if ($model->update($id, $data)) {
-                    // success
-                    $this->session->setFlashdata('success', 'User updated successfully.');
-                } else {
-                    // error
-                    $this->session->setFlashdata('error', 'Failed to update user. Please try again.');
-                }
-            }
-            return redirect()->to('/admin');
-        }
+         if ($this->request->getMethod() === 'POST') {
+             $data = $this->request->getPost();
 
-        // If add request do not prefill data, else prefill with matched user_id
-        $data['user'] = ($id === null) ? null : $model->find($id);
+             if ($id === null) {
+                 if ($model->insert($data)) {
+                     $this->session->setFlashdata('success', 'User added successfully.');
+                 } else {
+                     $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
+                 }
+             } else {
+                 if ($model->update($id, $data)) {
+                     $this->session->setFlashdata('success', 'User updated successfully.');
+                 } else {
+                     $this->session->setFlashdata('error', 'Failed to update user. Please try again.');
+                 }
+             }
 
-        return view('addedit', $data);
-    }
+             return redirect()->to('/admin');
+         }
+
+         $data['user'] = ($id === null) ? null : $model->find($id);
+
+         return view('addedit', $data);
+     }
 
     public function delete($id)
      {
