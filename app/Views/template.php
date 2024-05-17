@@ -10,7 +10,6 @@
   </head>
 
   <body class="bg-blue-800">
-
     <!-- Navbar -->
     <nav class="bg-blue-800 p-4 sticky top-0 z-10">
       <div class="container mx-auto flex justify-between items-center">

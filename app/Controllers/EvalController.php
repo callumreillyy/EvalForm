@@ -21,35 +21,22 @@ namespace App\Controllers;
         return view('index');
     }
 
-    public function surveys()
+    public function surveys($user_id)
     {
-        $surveys_json = '{
-        "surveys": [
-            {
-                "title": "Survey 1",
-                "description": "Description of Survey 1"
-            },
-            {
-                "title": "Survey 2",
-                "description": "Description of Survey 2"
-            },
-            {
-                "title": "Survey 3",
-                "description": "Description of Survey 3"
-            },
-            {
-                "title": "Survey 4",
-                "description": "Description of Survey 4"
-            }
-        ]
-        }';
+        $userModel = new \App\Models\UserModel();
+        $surveyModel = new \App\Models\SurveyModel();
+    
+        // Fetch user details by user_id
+        $data['user'] = $userModel->find($user_id);
         
-        $data['surveys'] = json_decode($surveys_json, true); 
-        # test json passed
-        # echo '<pre>';
-        # print_r($data['surveys']);
-        # echo '<pre>';
-
+        // Ensure user exists
+        if (!$data['user']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('User Not Found');
+        }
+    
+        // Fetch related data
+        $data['surveys'] = $surveyModel->where('user_id', $user_id)->findAll();
+        
         return view('surveys', $data);
     }
     // revised as per lab 5
@@ -118,7 +105,7 @@ namespace App\Controllers;
 
     public function createSurvey()
     {
-        return view('create_survey');
+        
     }
 
     // controller to handle add/edit requests for users.

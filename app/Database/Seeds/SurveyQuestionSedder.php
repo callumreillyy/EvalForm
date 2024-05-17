@@ -109,7 +109,6 @@ class SurveyQuestionSedder extends Seeder
                 }
             }
     
-            // Insert all options at once
             $this->db->table('Option')->insertBatch($option_data);
             // Clear the $option_data array for the next set of questions
             $option_data = [];

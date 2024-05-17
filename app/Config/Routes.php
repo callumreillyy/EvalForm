@@ -6,7 +6,7 @@ use CodeIgniter\Router\RouteCollection;
  * @var RouteCollection $routes
  */
 $routes->get('/', 'EvalController::index');
-$routes->get('/surveys', 'EvalController::surveys');
+$routes->get('/surveys/(:num)', 'EvalController::surveys/$1');
 $routes->get('/admin', 'EvalController::admin');
 // Routes for admin
 // REF prac5: https://alt-5fd17f67f4120.blackboard.com/
