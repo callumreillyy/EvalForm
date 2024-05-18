@@ -162,23 +162,7 @@ namespace App\Controllers;
      }
 
      // User or admin can delete a survey from the dashboard.
-     public function deleteSurvey($id)
-     {
-        // need user id here to redirect
-        // issue is how do i get the current user id?
-        $model = new \App\Models\SurveyModel();
-
-        if ($model->delete($id)) {
-            $this->session->setFlashdata('success', 'Survey deleted successfully.');
-        } else {
-            $this->session->setFlashdata('error', 'Failed to delete survey. Please try again.');
-        }
-
-        return redirect()->to('/surveys/2');
-     }
-
-     // User or admin can delete a survey from the dashboard.
-     public function addeditSurvey($id)
+     public function addeditSurvey($id = null)
      {
         $model = new \App\Models\SurveyModel();
 
@@ -204,7 +188,24 @@ namespace App\Controllers;
 
         $data['survey'] = ($id === null) ? null : $model->find($id);
 
+        print_r($data);
+
         return view('addeditSurvey', $data);
     }
 
+     // User or admin can delete a survey from the dashboard.
+     public function deleteSurvey($id)
+     {
+        // need user id here to redirect
+        // issue is how do i get the current user id?
+        $model = new \App\Models\SurveyModel();
+
+        if ($model->delete($id)) {
+            $this->session->setFlashdata('success', 'Survey deleted successfully.');
+        } else {
+            $this->session->setFlashdata('error', 'Failed to delete survey. Please try again.');
+        }
+
+        return redirect()->to('/surveys/2');
+     }
 }
