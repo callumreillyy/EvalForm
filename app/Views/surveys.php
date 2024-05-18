@@ -9,7 +9,7 @@
                 <div class="h-40 bg-gray-400 mb-4"></div>
                 <h3 class="text-lg font-bold mb-2"><?= $survey['title'] ?></h3>
                 <p class="text-gray-600"><?= $survey['description'] ?></p>
-                <!-- <a class="text-blue-500 hover:text-blue-600 edit" href="<?= base_url('surveys/addedit/'.$survey['survey_id']);?>">add/edit</a> -->
+                <a class="text-blue-500 hover:text-blue-600 edit" href="<?= base_url('surveys/addedit/'.$survey['survey_id']);?>">add/edit</a>
                 <a class="text-blue-500 hover:text-blue-600" href="<?= base_url('surveys/deleteSurvey/' . $survey['survey_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this survey?')">delete</a>
             </div>
         <?php endforeach; ?>
