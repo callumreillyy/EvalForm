@@ -17,7 +17,7 @@
                 <div class="h-40 bg-gray-400 mb-4"></div>
                 <h3 class="text-lg font-bold mb-2"><?= $survey['title'] ?></h3>
                 <p class="text-gray-600"><?= $survey['description'] ?></p>
-                <a class="text-blue-500 hover:text-blue-600 edit" href="<?= base_url('surveys/addeditSurvey/'.$survey['survey_id']);?>">add/edit</a>
+                <a class="text-blue-500 hover:text-blue-600 edit" href="<?= base_url('surveys/addeditSurvey/'.$survey['survey_id']);?>">edit</a>
                 <a class="text-blue-500 hover:text-blue-600" href="<?= base_url('surveys/deleteSurvey/' . $survey['survey_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this survey?')">delete</a>
             </div>
         <?php endforeach; ?>
@@ -25,7 +25,9 @@
     <div class="mt-8 flex justify-center">
         <?= str_replace('<a ', '<a class="px-3 py-1 bg-white text-blue-500 rounded-full mr-3"', $pager->links()) ?>
     </div>
+    <a class="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600" href="<?= base_url('surveys/addeditSurvey/');?>">Add Survey</a>
 </div>
+
 
 <?= $this->endSection() ?>
 

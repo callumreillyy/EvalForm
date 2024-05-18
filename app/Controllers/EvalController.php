@@ -141,25 +141,29 @@ namespace App\Controllers;
 
          if ($this->request->getMethod() === 'POST') {
              $data = $this->request->getPost();
+             print_r($data);
 
-             if ($id === null) {
-                 if ($userModel->insert($data)) {
-                     $this->session->setFlashdata('success', 'User added successfully.');
-                 } else {
-                     $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
-                 }
-             } else {
-                 if ($userModel->update($id, $data)) {
-                     $this->session->setFlashdata('success', 'User updated successfully.');
-                 } else {
-                     $this->session->setFlashdata('error', 'Failed to update user. Please try again.');
-                 }
-             }
+            if ($id === null) {
+                if ($userModel->insert($data)) {
+                    $this->session->setFlashdata('success', 'User added successfully.');
+                } else {
+                    $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
+                }
+            } else {
+                if ($userModel->update($id, $data)) {
+                    $this->session->setFlashdata('success', 'User updated successfully.');
+                } else {
+                    $this->session->setFlashdata('error', 'Failed to update user. Please try again.');
+                }
+            }
 
-             return redirect()->to('/admin');
+            return redirect()->to('/admin');
          }
 
          $data['user'] = ($id === null) ? null : $userModel->find($id);
+         echo '<pre>';
+            print_r($data['user']);
+        echo '</pre>';
 
          return view('addedit', $data);
      }
@@ -178,38 +182,54 @@ namespace App\Controllers;
      }
 
      public function addeditSurvey($id = null)
-    {
-        $surveyModel = new \App\Models\SurveyModel();
-
-        if ($this->request->getMethod() === 'POST') {
-            $data = $this->request->getPost();
-            $success = false;
-
-            if ($id === null) {
-                $success = $surveyModel->insert($data);
-                $message = $success ? 'Survey added successfully.' : 'Failed to add survey. Please try again.';
-            } else {
-                $success = $surveyModel->update($id, $data);
-                $message = $success ? 'Survey updated successfully.' : 'Failed to update survey. Please try again.';
-            }
-
-            if ($success) {
-                $surveyId = $id ?? $surveyModel->insertID();
-                $survey = $surveyModel->find($surveyId);
-                $userId = $survey['user_id'];
-                $this->session->setFlashdata('success', $message);
-                return redirect()->to('/surveys/' . $userId);
-            } else {
-                $this->session->setFlashdata('error', $message);
-                return redirect()->back()->withInput();
-            }
-        }
-
-        $data['survey'] = ($id === null) ? null : $surveyModel->find($id);
-        return view('addeditSurvey', $data);
-    }
-
-
+     {
+         $surveyModel = new \App\Models\SurveyModel();
+         $userModel = new \App\Models\UserModel(); // Assuming you have a UserModel
+     
+         if ($this->request->getMethod() === 'POST') {
+             $data = $this->request->getPost();
+             $userId = 5; // Get the current user's ID from the session
+    
+             if ($userId === null) {
+                 $this->session->setFlashdata('error', 'Invalid user ID.');
+                 return redirect()->back()->withInput();
+             }
+     
+             $data['user_id'] = $userId; // Add user_id to the data array
+             $success = false;
+     
+             if ($id === null) {
+                 $success = $surveyModel->insert($data);
+                 $message = $success ? 'Survey added successfully.' : 'Failed to add survey. Please try again.';
+             } else {
+                 $success = $surveyModel->update($id, $data);
+                 $message = $success ? 'Survey updated successfully.' : 'Failed to update survey. Please try again.';
+             }
+     
+             if ($success) {
+                 $surveyId = $id ?? $surveyModel->insertID();
+                 $survey = $surveyModel->find($surveyId);
+                 $userId = $survey['user_id'];
+                 $this->session->setFlashdata('success', $message);
+                 return redirect()->to('/surveys/' . $userId);
+             } else {
+                 $this->session->setFlashdata('error', $message);
+                 return redirect()->back()->withInput();
+             }
+         }
+     
+         $data['survey'] = ($id === null) ? null : $surveyModel->find($id);
+     
+         // Debug: Log $data['survey'] to the browser console
+         echo '<script>';
+         echo 'console.log(' . json_encode($data['survey']) . ')';
+         echo '</script>';
+     
+         return view('addeditSurvey', $data);
+     }
+     
+     
+     
 
      // User or admin can delete a survey from the dashboard.
      public function deleteSurvey($id)
