@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   </head>
 
-  <body class="bg-blue-800">
+  <body class="bg-blue-800 min-h-screen">
     <!-- Navbar -->
     <nav class="bg-blue-800 p-4 sticky top-0 z-10">
       <div class="container mx-auto flex justify-between items-center">

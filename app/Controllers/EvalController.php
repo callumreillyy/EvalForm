@@ -23,15 +23,33 @@ namespace App\Controllers;
 
     public function surveys($user_id)
     {
-        $userModel = new \App\Models\UserModel();
+        // $userModel = new \App\Models\UserModel();
         $surveyModel = new \App\Models\SurveyModel();
-    
-        // Fetch user details by user_id
-        $data['user'] = $userModel->find($user_id);
-        
-        // Ensure user exists
-        if (!$data['user']) {
+
+         // Ensure user exists
+         if (!$user_id) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('User Not Found');
+        }
+
+        if (!empty($search)) {
+            // If the search query is not empty
+            
+            // Initialize an empty array to store search conditions
+            $conditions = [];
+            
+            // Loop through each allowed field in the UserModel
+            foreach ($surveyModel->allowedFields as $field) {
+                // Generate a search condition for each field using LIKE operator
+                $conditions[] = "$field LIKE '%$search%'";
+            }
+            // Implode the conditions array with OR operator to create a single search clause
+            $whereClause = implode(' OR ', $conditions);
+            
+            $surveys = $surveyModel->where($whereClause)->orderBy('title', 'ASC')->findAll();
+        } else {
+            // If no search query is provided
+            // Retrieve all users, order by name in ascending order
+            $surveys = $surveyModel->orderBy('title', 'ASC')->findAll();
         }
     
         // Fetch related data with pagination (4 surveys per page)
@@ -149,7 +167,7 @@ namespace App\Controllers;
      }
 
     public function delete($id)
-     {
+    {
         $model = new \App\Models\UserModel();
 
         if ($model->delete($id)) {
