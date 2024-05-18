@@ -164,6 +164,8 @@ namespace App\Controllers;
      // User or admin can delete a survey from the dashboard.
      public function deleteSurvey($id)
      {
+        // need user id here to redirect
+        // issue is how do i get the current user id?
         $model = new \App\Models\SurveyModel();
 
         if ($model->delete($id)) {
@@ -174,5 +176,35 @@ namespace App\Controllers;
 
         return redirect()->to('/surveys/2');
      }
+
+     // User or admin can delete a survey from the dashboard.
+     public function addedditSurvey($id)
+     {
+        $model = new \App\Models\SurveyModel();
+
+        if ($this->request->getMethod() === 'POST') {
+            $data = $this->request->getPost();
+
+            if ($id === null) {
+                if ($model->insert($data)) {
+                    $this->session->setFlashdata('success', 'Survey added successfully.');
+                } else {
+                    $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
+                }
+            } else {
+                if ($model->update($id, $data)) {
+                    $this->session->setFlashdata('success', 'Survey updated successfully.');
+                } else {
+                    $this->session->setFlashdata('error', 'Failed to update Survey. Please try again.');
+                }
+            }
+
+            return redirect()->to('/surveys/2');
+        }
+
+        $data['user'] = ($id === null) ? null : $model->find($id);
+
+        return view('addedit', $data);
+    }
 
 }
