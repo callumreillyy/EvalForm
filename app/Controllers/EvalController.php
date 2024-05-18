@@ -202,7 +202,7 @@ namespace App\Controllers;
             return redirect()->to('/surveys/2');
         }
 
-        $data['user'] = ($id === null) ? null : $model->find($id);
+        $data['survey'] = ($id === null) ? null : $model->find($id);
 
         return view('addedit', $data);
     }
