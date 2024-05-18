@@ -31,9 +31,7 @@ namespace App\Controllers;
             throw new \CodeIgniter\Exceptions\PageNotFoundException('User Not Found');
         }
 
-        if (!empty($search)) {
-            // If the search query is not empty
-            
+        if (!empty($search)) {            
             // Initialize an empty array to store search conditions
             $conditions = [];
             
@@ -48,7 +46,6 @@ namespace App\Controllers;
             $surveys = $surveyModel->where($whereClause)->orderBy('title', 'ASC')->findAll();
         } else {
             // If no search query is provided
-            // Retrieve all users, order by name in ascending order
             $surveys = $surveyModel->orderBy('title', 'ASC')->findAll();
         }
     
@@ -68,7 +65,7 @@ namespace App\Controllers;
     public function admin()
     {
         // Create an instance of the UserModel
-        $model = new \App\Models\UserModel();
+        $userModel = new \App\Models\UserModel();
         
         // Get the value of the 'search' query parameter from the request
         $search = $this->request->getGet('search');
@@ -80,18 +77,18 @@ namespace App\Controllers;
             $conditions = [];
             
             // Loop through each allowed field in the UserModel
-            foreach ($model->allowedFields as $field) {
+            foreach ($userModel->allowedFields as $field) {
                 // Generate a search condition for each field using LIKE operator
                 $conditions[] = "$field LIKE '%$search%'";
             }
             // Implode the conditions array with OR operator to create a single search clause
             $whereClause = implode(' OR ', $conditions);
             
-            $users = $model->where($whereClause)->orderBy('name', 'ASC')->findAll();
+            $users = $userModel->where($whereClause)->orderBy('name', 'ASC')->findAll();
         } else {
             // If no search query is provided
             // Retrieve all users, order by name in ascending order
-            $users = $model->orderBy('name', 'ASC')->findAll();
+            $users = $userModel->orderBy('name', 'ASC')->findAll();
         }
 
         $data['users'] = $users;
@@ -137,7 +134,7 @@ namespace App\Controllers;
     // _hash=33A9693F1E2B930E96013FF53B363A58
     public function addedit($id = null)
      {
-         $model = new \App\Models\UserModel();
+         $userModel = new \App\Models\UserModel();
 
          // debugging request string
          // print($this->request->getMethod());
@@ -146,13 +143,13 @@ namespace App\Controllers;
              $data = $this->request->getPost();
 
              if ($id === null) {
-                 if ($model->insert($data)) {
+                 if ($userModel->insert($data)) {
                      $this->session->setFlashdata('success', 'User added successfully.');
                  } else {
                      $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
                  }
              } else {
-                 if ($model->update($id, $data)) {
+                 if ($userModel->update($id, $data)) {
                      $this->session->setFlashdata('success', 'User updated successfully.');
                  } else {
                      $this->session->setFlashdata('error', 'Failed to update user. Please try again.');
@@ -162,16 +159,16 @@ namespace App\Controllers;
              return redirect()->to('/admin');
          }
 
-         $data['user'] = ($id === null) ? null : $model->find($id);
+         $data['user'] = ($id === null) ? null : $userModel->find($id);
 
          return view('addedit', $data);
      }
 
     public function delete($id)
     {
-        $model = new \App\Models\UserModel();
+        $userModel = new \App\Models\UserModel();
 
-        if ($model->delete($id)) {
+        if ($userModel->delete($id)) {
             $this->session->setFlashdata('success', 'User deleted successfully.');
         } else {
             $this->session->setFlashdata('error', 'Failed to delete user. Please try again.');
@@ -180,37 +177,39 @@ namespace App\Controllers;
         return redirect()->to('/admin');
      }
 
-     // User or admin can delete a survey from the dashboard.
      public function addeditSurvey($id = null)
-     {
-        $model = new \App\Models\SurveyModel();
+    {
+        $surveyModel = new \App\Models\SurveyModel();
 
         if ($this->request->getMethod() === 'POST') {
             $data = $this->request->getPost();
+            $success = false;
 
             if ($id === null) {
-                if ($model->insert($data)) {
-                    $this->session->setFlashdata('success', 'Survey added successfully.');
-                } else {
-                    $this->session->setFlashdata('error', 'Failed to add user. Please try again.');
-                }
+                $success = $surveyModel->insert($data);
+                $message = $success ? 'Survey added successfully.' : 'Failed to add survey. Please try again.';
             } else {
-                if ($model->update($id, $data)) {
-                    $this->session->setFlashdata('success', 'Survey updated successfully.');
-                } else {
-                    $this->session->setFlashdata('error', 'Failed to update Survey. Please try again.');
-                }
+                $success = $surveyModel->update($id, $data);
+                $message = $success ? 'Survey updated successfully.' : 'Failed to update survey. Please try again.';
             }
 
-            return redirect()->to('/surveys/2');
+            if ($success) {
+                $surveyId = $id ?? $surveyModel->insertID();
+                $survey = $surveyModel->find($surveyId);
+                $userId = $survey['user_id'];
+                $this->session->setFlashdata('success', $message);
+                return redirect()->to('/surveys/' . $userId);
+            } else {
+                $this->session->setFlashdata('error', $message);
+                return redirect()->back()->withInput();
+            }
         }
 
-        $data['survey'] = ($id === null) ? null : $model->find($id);
-
-        print_r($data);
-
+        $data['survey'] = ($id === null) ? null : $surveyModel->find($id);
         return view('addeditSurvey', $data);
     }
+
+
 
      // User or admin can delete a survey from the dashboard.
      public function deleteSurvey($id)
