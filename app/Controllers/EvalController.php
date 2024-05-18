@@ -55,6 +55,7 @@ namespace App\Controllers;
         // Fetch related data with pagination (4 surveys per page)
         $data['surveys'] = $surveyModel->where('user_id', $user_id)->paginate(4);
         $data['pager'] = $surveyModel->pager;
+        $data['user_id'] = $user_id;
 
         return view('surveys', $data);
     }
