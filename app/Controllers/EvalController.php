@@ -178,7 +178,7 @@ namespace App\Controllers;
      }
 
      // User or admin can delete a survey from the dashboard.
-     public function addedditSurvey($id)
+     public function addeditSurvey($id)
      {
         $model = new \App\Models\SurveyModel();
 
@@ -204,7 +204,7 @@ namespace App\Controllers;
 
         $data['survey'] = ($id === null) ? null : $model->find($id);
 
-        return view('addedit', $data);
+        return view('addeditSurvey', $data);
     }
 
 }
