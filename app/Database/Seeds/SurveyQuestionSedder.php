@@ -29,7 +29,7 @@ class SurveyQuestionSedder extends Seeder
         $surveyIds = [];
 
         foreach ($userIds as $userId) {
-            for($i = 0; $i <= 50; $i++) {
+            for($i = 0; $i <= 5; $i++) {
             // Insert survey data
                 $this->db->table('Surveys')->insert([
                     'user_id' => $userId,

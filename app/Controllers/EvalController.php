@@ -161,4 +161,18 @@ namespace App\Controllers;
         return redirect()->to('/admin');
      }
 
+     // User or admin can delete a survey from the dashboard.
+     public function deleteSurvey($id)
+     {
+        $model = new \App\Models\SurveyModel();
+
+        if ($model->delete($id)) {
+            $this->session->setFlashdata('success', 'Survey deleted successfully.');
+        } else {
+            $this->session->setFlashdata('error', 'Failed to delete survey. Please try again.');
+        }
+
+        return redirect()->to('/surveys/2');
+     }
+
 }

@@ -38,7 +38,7 @@
                 <td class="px-4 py-2 actions">
                   <a class="text-blue-500 hover:text-blue-600 edit" href="<?= base_url('admin/addedit/'.$user['user_id']);?>">add/edit</a>
                   <a class="text-blue-500 hover:text-blue-600" href="<?= base_url('admin/delete/' . $user['user_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">delete</a>
-                  <a class="text-blue-500 hover:text-blue-600" href="<?= base_url('Surveys/'.$user['user_id']);?>">surveys</a></td>
+                  <a class="text-blue-500 hover:text-blue-600" href="<?= base_url('surveys/'.$user['user_id']);?>">surveys</a></td>
                 </td>
                 <!-- Add more user details as needed -->
               </tr>
