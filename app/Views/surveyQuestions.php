@@ -65,13 +65,15 @@
         </div>
       </div> 
 
+      
+
     <!-- Template for new textQuestion -->
     <template id="textQuestionTemplate">
     <div class="bg-white rounded-lg shadow-md p-6">
       <div class="mb-6" id="textQuestionBody">
           <h3 class="number text-lg font-bold mb-2">tester template</h3> 
           <h3 class="question text-lg mb-2">tester template</h3>
-          <textarea rows="4" class="response w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+          <textarea class="response w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" ></textarea>
           <input type="hidden" class="textQuestion-id" value="">
           <input type="hidden" class="survey-id" value="">
           <div class="py-2">
@@ -83,7 +85,10 @@
     </template>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
+
     const base_url = 'https://infs3202-eeb1c0a8.uqcloud.net/EvalForm/textQuestion';
 
     // Function to show alert messages
@@ -113,17 +118,17 @@
         const textQuestionItem = event.target.closest('.text-question-item');
         
         const textQuestionId = textQuestionItem.querySelector('.textQuestion-id').value;
-        const surveyId = textQuestionItem.querySelector('.survey_id').value;
+        const surveyId = textQuestionItem.querySelector('.survey-id').value;
         const number = textQuestionItem.querySelector('.number').value;
         const question = textQuestionItem.querySelector('.question').value;
         const response = textQuestionItem.querySelector('.response').value;
 
         document.getElementById('textQuestionModalLabel').textContent = 'Edit Text Question';
-        document.getElementById('number').value = institution;
-        document.getElementById('question').value = studyType;
-        document.getElementById('response').value = area;
-        document.getElementById('textQuestionId').value = educationId;
-        document.getElementById('surveyId').value = ussurveyIderId;
+        document.getElementById('number').value = number;
+        document.getElementById('question').value = question;
+        document.getElementById('response').value = response;
+        document.getElementById('textQuestionId').value = textQuestionId;
+        document.getElementById('surveyId').value = surveyId;
       }
     });
 
