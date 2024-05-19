@@ -54,6 +54,8 @@ namespace App\Controllers;
         $data['pager'] = $surveyModel->pager;
         $data['user_id'] = $user_id;
 
+        $this->session->set('user_id', $user_id);
+
         return view('surveys', $data);
     }
     // revised as per lab 5
@@ -92,26 +94,35 @@ namespace App\Controllers;
         }
 
         $data['users'] = $users;
+
+        print_r($data);
+
         return view('admin', $data);
     }
 
     public function surveyQuestions($survey_id)
     {
+        $userModel = new \App\Models\UserModel();
         $surveyModel = new \App\Models\SurveyModel();
+        $textQuestionModel = new \App\Models\TextQuestionModel();
         // will need to add text question and multiple question models here
         // maybe options model.
 
         // Fetch survey details by survey id
         $data['survey'] = $surveyModel->find($survey_id);
+        $user_id = $this->session->get('user_id');
 
         // Ensure user exists
-        if (!$$data['survey']) {
+        if (!$data['survey']) {
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Survey Not Found');
         }
 
-        print_r($data);
 
-        return view('surveyQuestions');
+        $data['user'] = $userModel->where('user_id', $user_id)->findAll();
+
+        print_r($data['user']);
+
+        return view('surveyQuestions', $data);
     }
     
     public function account()
@@ -198,12 +209,11 @@ namespace App\Controllers;
      public function addeditSurvey($id = null)
      {
          $surveyModel = new \App\Models\SurveyModel();
-         $userModel = new \App\Models\UserModel(); // Assuming you have a UserModel
      
          if ($this->request->getMethod() === 'POST') {
              $data = $this->request->getPost();
              // currently hardset but will update when login setup.
-             $userId = 5; // Get the current user's ID from the session
+             $userId = $this->session->get('user_id'); // Get the current user's ID from the session
     
              if ($userId === null) {
                  $this->session->setFlashdata('error', 'Invalid user ID.');
@@ -227,7 +237,7 @@ namespace App\Controllers;
                  $userId = $survey['user_id'];
                  $this->session->setFlashdata('success', $message);
                  // This will redirect to addedit questions
-                 return redirect()->to('/surveys/' . $userId);
+                 return redirect()->to('/surveyQuestions/' . $surveyId);
              } else {
                  $this->session->setFlashdata('error', $message);
                  return redirect()->back()->withInput();
@@ -238,9 +248,6 @@ namespace App\Controllers;
          return view('addeditSurvey', $data);
      }
      
-     
-     
-
      // User or admin can delete a survey from the dashboard.
      public function deleteSurvey($id)
      {
