@@ -13,7 +13,7 @@
     <nav class="bg-blue-800 p-4 sticky top-0 z-10">
       <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center">
-          <img src="EvalForm-Logo.png" alt="EvalForm logo" class="px-3 h-8 md:h-10 lg:h-12"/>
+          <img src="<?= base_url('images/EvalForm-logo.png'); ?>" alt="EvalForm logo" class="px-3 h-16"/>
           <a href="#" class="text-white text-decoration-none font-bold">EvalForm</a>
         </div>
         <button class="text-white focus:outline-none md:hidden">
