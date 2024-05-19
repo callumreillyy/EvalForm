@@ -5,11 +5,12 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
+
+// Home route
 $routes->get('/', 'EvalController::index');
 
+// Survey routes
 $routes->get('surveys/(:num)', 'EvalController::surveys/$1', ['filter' => 'login']);
-
-
 $routes->group('surveys', ['filter' => 'login'], function($routes) {
     $routes->get('/', 'EvalController::surveys/');
     $routes->match(['get', 'post'], 'addeditSurvey', 'EvalController::addeditSurvey');
@@ -31,16 +32,15 @@ $routes->group('admin', ['filter' => 'admin'], function($routes) {
     $routes->get('delete/(:num)', 'EvalController::delete/$1');
 });
 
+// Route for adding / editing survey questions
 $routes->get('/surveyQuestions/(:num)', 'EvalController::surveyQuestions/$1', ['filter' => 'login']);
 
-$routes->get('/account', 'EvalController::account');
-$routes->get('/dashboard', 'EvalController::dashboard');
-$routes->get('/statistics', 'EvalController::statistics');
-
+// Google login authentication
 $routes->get('/login', 'Auth::google_login');  // Route to initiate Google login
 $routes->get('/login/callback', 'Auth::google_callback');  // Callback route after Google auth
 $routes->get('/logout', 'Auth::logout');
 
+// RESTful api routes
 $routes->resource('survey');
 $routes->resource('textQuestion');
 $routes->resource('multipleQuestion');
