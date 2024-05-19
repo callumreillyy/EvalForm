@@ -7,17 +7,14 @@
     <link rel="stylesheetfont" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha384-rns70jprv1y4wjol9pk7cv41vh0nz5rq4ncm/21eucgcxnnjdt3zvumru4/2o4vf" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>  </head>
-
+    
   <body class="bg-blue-800 min-h-screen">
     <!-- Navbar -->
     <nav class="bg-blue-800 p-4 sticky top-0 z-10">
       <div class="container mx-auto flex justify-between items-center">
         <div class="flex items-center">
           <img src="EvalForm-Logo.png" alt="EvalForm logo" class="px-3 h-8 md:h-10 lg:h-12"/>
-          <a href="#" class="text-white font-bold">EvalForm</a>
+          <a href="#" class="text-white text-decoration-none font-bold">EvalForm</a>
         </div>
         <button class="text-white focus:outline-none md:hidden">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -25,10 +22,10 @@
           </svg>
         </button>
         <div class="hidden md:flex items-center space-x-4">
-          <a class="text-white <?= service('router')->getMatchedRoute()[0] == '/' ? 'active' : ''; ?>" href="<?= base_url(); ?>">Home</a>
-          <a class="text-white <?= service('router')->getMatchedRoute()[0] == 'admin' ? 'active' : ''; ?>" href="<?= base_url('admin'); ?>">Admin</a>
-          <a class="text-white <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys'); ?>">Surveys</a>
-          <a class="text-white <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url('login'); ?>">Login</a>
+          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == '/' ? 'active' : ''; ?>" href="<?= base_url(); ?>">Home</a>
+          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'admin' ? 'active' : ''; ?>" href="<?= base_url('admin'); ?>">Admin</a>
+          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys'); ?>">Surveys</a>
+          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url('login'); ?>">Login</a>
         </div>
       </div>
     </nav>

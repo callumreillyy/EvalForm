@@ -27,8 +27,11 @@
         </div>
       <?php endforeach; ?>   
     </div>
-
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#textQuestionModal" id="addTextQuestionBtn">Add Text Question</button>
+    
+    <div class="flex justify-between py-2">
+      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#textQuestionModal" id="addTextQuestionBtn">Add Text Question</button>
+      <a class="btn btn-primary mb-3" <?= service('router')->getMatchedRoute()[0] == '/surveys' ? 'active' : ''; ?> href="<?= base_url('surveys/' . $user[0]['user_id']); ?>">Done</a>
+    </div>    
 
     <!-- Alert for displaying messages -->
     <div id="questionAlert" class="alert alert-dismissible fade show mt-3" role="alert" style="display: none;">
@@ -134,6 +137,13 @@
     // Save button in modal for both adding and editing
     document.getElementById('saveTextQuestion').addEventListener('click', () => {
         const form = document.getElementById('textQuestionForm');
+        
+        // Check if form is valid
+        if (!form.checkValidity()) {
+          form.reportValidity();  // Highlight the fields that need attention
+          return;
+        }
+        
         const formData = new FormData(form);
         const textQuestionId = formData.get('text_question_id');
         const data = Object.fromEntries(formData.entries());
@@ -176,21 +186,30 @@
           .then(response => response.json())
           .then(data => {
             if (data) {
-              console.log(data);
-              const template = document.getElementById('textQuestionTemplate');
-              const clone = template.content.cloneNode(true);
+              console.log(data.text_question_id);
 
-              clone.querySelector('.textQuestion-id').value = data.text_question_id;
-              clone.querySelector('.survey-id').value = formData.get('surveyId');
-              clone.querySelector('.number').textContent = formData.get('number');
-              clone.querySelector('.question').textContent = formData.get('question');
-              clone.querySelector('.response').textContent = formData.get('response');
-              bootstrap.Modal.getInstance(document.getElementById('textQuestionModal')).hide();
-              document.getElementById('textQuestionBody').appendChild(clone);
-              form.reset();
-              showAlert('Text Question added successfully. Refresh page to edit', 'success');
+              // Check if text_question_id is empty
+              if (!data.text_question_id) {
+                  // Refresh the page if text_question_id is empty
+                  location.reload();
+              } else {
+                  const template = document.getElementById('textQuestionTemplate');
+                  const clone = template.content.cloneNode(true);
+
+                  clone.querySelector('.textQuestion-id').value = data.text_question_id;
+                  clone.querySelector('.survey-id').value = formData.get('surveyId');
+                  clone.querySelector('.number').textContent = formData.get('number');
+                  clone.querySelector('.question').textContent = formData.get('question');
+                  clone.querySelector('.response').value = formData.get('response'); // Use .value for textarea
+
+                  bootstrap.Modal.getInstance(document.getElementById('textQuestionModal')).hide();
+
+                  document.getElementById('textQuestionBody').appendChild(clone);
+                  form.reset();
+                  showAlert('Text Question added successfully. Refresh page to edit', 'success');
+              }
             } else {
-              showAlert('Error adding education. Please try again.', 'danger');
+                showAlert('Error adding education. Please try again.', 'danger');
             }
           })
           .catch(error => {
@@ -226,7 +245,6 @@
             }
         }
     });
-
 
 </script>
 
