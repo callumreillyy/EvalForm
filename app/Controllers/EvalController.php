@@ -21,10 +21,7 @@ namespace App\Controllers;
         // Currently user is hardcoded to 3
         // Then is set again once admin navigates to admin page and selects a
         // user to view surveys for. 
-        $this->session->set('user_id', 8);
-        $user_id = $this->session->get('user_id');
-        $data['user_id'] = $user_id;
-        return view('index', $data);
+        return view('index');
     }
 
     public function surveys($user_id)

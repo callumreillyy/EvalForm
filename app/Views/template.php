@@ -23,10 +23,16 @@
         </button>
         <div class="hidden md:flex items-center space-x-4">
           <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == '/' ? 'active' : ''; ?>" href="<?= base_url(); ?>">Home</a>
-          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'admin' ? 'active' : ''; ?>" href="<?= base_url('admin'); ?>">Admin</a>
-          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url((isset($user_id) ? 'surveys/' . $user_id : '/')); ?>">Surveys</a>
-          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url('login'); ?>">Login</a>
-        </div>
+          <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys/' . session()->get('userId')); ?>">Surveys</a>
+          <?php if (session()->get('isLoggedIn')): ?>
+            <?php if (session()->get('isAdmin')): ?>
+              <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'admin' ? 'active' : ''; ?>" href="<?= base_url('admin'); ?>">Admin</a>
+            <?php endif; ?>
+              <a class="text-white text-decoration-none" href="<?= base_url("logout"); ?>">Logout</a>
+          <?php else: ?>
+            <a class="text-white text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url("login"); ?>">Login</a>
+          <?php endif; ?>
+          </div>
       </div>
     </nav>
 

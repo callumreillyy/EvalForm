@@ -15,7 +15,7 @@
   <div class="bg-gray-100 mx-auto px-4 py-8 flex justify-center items-center h-screen">
     <div class="px-4">
       <h1 class="text-blue-800 py-6 text-9xl font-bold ">Start collecting feedback now!</h1>
-      <a class="bg-blue-200 text-blue-600 font-bold text-2xl py-6 px-6 rounded mt-8 text-decoration-none <?= service('router')->getMatchedRoute()[0] == '/surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys/' . $user_id); ?>">Create Your First Survey</a>
+      <a class="bg-blue-200 text-blue-600 font-bold text-2xl py-6 px-6 rounded mt-8 text-decoration-none <?= service('router')->getMatchedRoute()[0] == '/surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys'); ?>">Create Your First Survey</a>
     </div>
   </div>
 
