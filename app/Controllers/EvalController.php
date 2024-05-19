@@ -18,6 +18,9 @@ namespace App\Controllers;
 
     public function index()
     {
+        // Currently user is hardcoded to 3
+        // Then is set again once admin navigates to admin page and selects a
+        // user to view surveys for. 
         $this->session->set('user_id', 3);
         $user_id = $this->session->get('user_id');
         $data['user_id'] = $user_id;
@@ -58,6 +61,7 @@ namespace App\Controllers;
         $data['user_id'] = $user_id;
 
         // make sure this is set in login!!
+        // reset user_id to the selected user for admin
         $this->session->set('user_id', $user_id);
 
         return view('surveys', $data);
