@@ -9,7 +9,9 @@ $routes->get('/', 'EvalController::index');
 
 $routes->get('surveys/(:num)', 'EvalController::surveys/$1', ['filter' => 'login']);
 
-$routes->group('surveys', function($routes) {
+
+$routes->group('surveys', ['filter' => 'login'], function($routes) {
+    $routes->get('/', 'EvalController::surveys/');
     $routes->match(['get', 'post'], 'addeditSurvey', 'EvalController::addeditSurvey');
     $routes->match(['get', 'post'], 'addeditSurvey/(:num)', 'EvalController::addeditSurvey/$1');
     $routes->get('deleteSurvey/(:num)', 'EvalController::deleteSurvey/$1');

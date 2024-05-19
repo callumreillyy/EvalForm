@@ -13,10 +13,14 @@ class LoginFilter implements FilterInterface
         
         // Check if the user is not logged in
         if (!$session->get('isLoggedIn')) {
+            // Load the view with the template
+            $view = Services::renderer();
+            $body = $view->setData([])->render('notLoggedIn');
+
             // Prepare a response object to return a message
             $response = Services::response();
             $response->setStatusCode(200); // You can set this to 401 if it's an unauthorized access
-            $response->setBody('Not logged In');
+            $response->setBody($body);
             return $response; // Return the response object with the message
         }
     }

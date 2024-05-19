@@ -4,6 +4,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\Config\Services;
+use CodeIgniter\View\View;
 
 class AdminFilter implements FilterInterface
 {
@@ -13,11 +14,15 @@ class AdminFilter implements FilterInterface
 
         // Check if the user is not an admin
         if (!$session->get('isAdmin')) {
-            // Prepare a response object to return a message
+            // Load the view with the template
+            $view = Services::renderer();
+            $body = $view->setData([])->render('accessDenied');
+
+            // Prepare a response object to return the view
             $response = Services::response();
             $response->setStatusCode(403); // Appropriate status code for forbidden access
-            $response->setBody('Access Denied');
-            return $response; // Return the response object with the message
+            $response->setBody($body);
+            return $response; // Return the response object with the view
         }
     }
 
