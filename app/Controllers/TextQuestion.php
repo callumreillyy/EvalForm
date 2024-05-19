@@ -93,7 +93,7 @@ class TextQuestion extends ResourceController
     public function delete($id = null)
     {
         $model = new TextQuestionModel();
-
+        
         // Check if the record exists before attempting deletion.
         if (!$model->find($id)) {
             return $this->failNotFound("No Text Question entry found with ID: {$id}");

@@ -54,6 +54,7 @@ namespace App\Controllers;
         $data['pager'] = $surveyModel->pager;
         $data['user_id'] = $user_id;
 
+        // make sure this is set in login!!
         $this->session->set('user_id', $user_id);
 
         return view('surveys', $data);
@@ -119,8 +120,13 @@ namespace App\Controllers;
 
 
         $data['user'] = $userModel->where('user_id', $user_id)->findAll();
+        $data['textQuestions'] = $textQuestionModel->where('survey_id', $survey_id)->findAll();
 
         print_r($data['user']);
+        print_r($data['textQuestions']);
+        print_r($data['survey']);
+
+
 
         return view('surveyQuestions', $data);
     }
