@@ -123,7 +123,7 @@
         document.getElementById('question').value = studyType;
         document.getElementById('response').value = area;
         document.getElementById('textQuestionId').value = educationId;
-        document.getElementById('surveyId').value = userId;
+        document.getElementById('surveyId').value = ussurveyIderId;
       }
     });
 
