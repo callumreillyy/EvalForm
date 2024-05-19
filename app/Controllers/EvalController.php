@@ -18,7 +18,10 @@ namespace App\Controllers;
 
     public function index()
     {
-        return view('index');
+        $this->session->set('user_id', 3);
+        $user_id = $this->session->get('user_id');
+        $data['user_id'] = $user_id;
+        return view('index', $data);
     }
 
     public function surveys($user_id)
@@ -96,8 +99,6 @@ namespace App\Controllers;
 
         $data['users'] = $users;
 
-        print_r($data);
-
         return view('admin', $data);
     }
 
@@ -118,15 +119,8 @@ namespace App\Controllers;
             throw new \CodeIgniter\Exceptions\PageNotFoundException('Survey Not Found');
         }
 
-
         $data['user'] = $userModel->where('user_id', $user_id)->findAll();
         $data['textQuestions'] = $textQuestionModel->where('survey_id', $survey_id)->findAll();
-
-        print_r($data['user']);
-        print_r($data['textQuestions']);
-        print_r($data['survey']);
-
-
 
         return view('surveyQuestions', $data);
     }
@@ -192,9 +186,6 @@ namespace App\Controllers;
          }
 
          $data['user'] = ($id === null) ? null : $userModel->find($id);
-         echo '<pre>';
-            print_r($data['user']);
-        echo '</pre>';
 
          return view('addedit', $data);
      }

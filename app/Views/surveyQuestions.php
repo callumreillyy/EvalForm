@@ -11,11 +11,11 @@
     </div>
 
     <!-- Questions -->
-    <div class="bg-white rounded-lg shadow-md p-6">      
+    <div class="bg-white rounded-lg shadow-md p-6" id="textQuestionBody">      
       <!-- Free Text Entry -->
       <?php foreach ($textQuestions as $textQuestion): ?>
-        <div class="mb-6 text-question-item" id="textQuestionBody-<?= esc($textQuestion['text_question_id']) ?>">
-          <h3 class="number text-lg font-bold mb-2">Question <?= esc($textQuestion['number']) ?>.</h3> 
+        <div class="mb-6 text-question-item" id="text-question-id-<?= esc($textQuestion['text_question_id']) ?>">
+          <h3 class="number text-lg font-bold mb-2"><?= esc($textQuestion['number']) ?></h3> 
           <h3 class="question text-lg mb-2"><?= esc($textQuestion['question']) ?></h3>
           <textarea class="response w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4"></textarea>
           <input type="hidden" class="textQuestion-id" value="<?= esc($textQuestion['text_question_id']) ?>">
@@ -26,8 +26,9 @@
           </div>
         </div>
       <?php endforeach; ?>   
-      <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#textQuestionModal" id="addTextQuestionBtn">Add Text Question</button>
     </div>
+
+    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#textQuestionModal" id="addTextQuestionBtn">Add Text Question</button>
 
     <!-- Alert for displaying messages -->
     <div id="questionAlert" class="alert alert-dismissible fade show mt-3" role="alert" style="display: none;">
@@ -53,7 +54,7 @@
                       <label for="question" class="form-label">Question</label>
                       <input type="text" class="form-control" id="question" name="question" required>
                   </div>
-                  <input type="hidden" id="response" name="text_question_id">
+                  <input type="hidden" id="response" name="response">
                   <input type="hidden" id="textQuestionId" name="text_question_id">
                   <input type="hidden" id="surveyId" name="survey_id" value="<?= esc($survey['survey_id']) ?>">
               </form>
@@ -65,27 +66,23 @@
         </div>
       </div> 
 
-      
-
     <!-- Template for new textQuestion -->
     <template id="textQuestionTemplate">
-    <div class="bg-white rounded-lg shadow-md p-6">
-      <div class="mb-6" id="textQuestionBody">
-          <h3 class="number text-lg font-bold mb-2">tester template</h3> 
-          <h3 class="question text-lg mb-2">tester template</h3>
-          <textarea class="response w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" ></textarea>
-          <input type="hidden" class="textQuestion-id" value="">
-          <input type="hidden" class="survey-id" value="">
-          <div class="py-2">
-            <button type="button" class="btn btn-primary btn-sm edit-textQuestion" data-bs-toggle="modal" data-bs-target="#textQuestionModal">Edit</button>
-            <button type="button" class="btn btn-danger btn-sm delete-textQuestion">Delete</button>
-          </div>
+      <div class="mb-6 text-question-item">
+        <h3 class="number text-lg font-bold mb-2">tester template</h3> 
+        <h3 class="question text-lg mb-2">tester template</h3>
+        <textarea class="response w-full px-4 py-2 rounded-lg bg-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" rows="4" ></textarea>
+        <input type="hidden" class="textQuestion-id" value="">
+        <input type="hidden" class="survey-id" value="">
+        <div class="py-2">
+          <button type="button" class="btn btn-primary btn-sm edit-textQuestion" data-bs-toggle="modal" data-bs-target="#textQuestionModal">Edit</button>
+          <button type="button" class="btn btn-danger btn-sm delete-textQuestion">Delete</button>
         </div>
       </div>
     </template>
   </div>
 
-  nP :P?<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
 
@@ -119,9 +116,11 @@
         
         const textQuestionId = textQuestionItem.querySelector('.textQuestion-id').value;
         const surveyId = textQuestionItem.querySelector('.survey-id').value;
-        const number = textQuestionItem.querySelector('.number').value;
-        const question = textQuestionItem.querySelector('.question').value;
+        const number = textQuestionItem.querySelector('.number').textContent;
+        const question = textQuestionItem.querySelector('.question').textContent;
         const response = textQuestionItem.querySelector('.response').value;
+
+        console.log(textQuestionId);
 
         document.getElementById('textQuestionModalLabel').textContent = 'Edit Text Question';
         document.getElementById('number').value = number;
@@ -138,25 +137,67 @@
         const formData = new FormData(form);
         const textQuestionId = formData.get('text_question_id');
         const data = Object.fromEntries(formData.entries());
-        const url = textQuestionId ? `${base_url}/textQuestion/${textQuestionId}` : `${base_url}/education`;
 
-        fetch(url, {
-            method: educationId ? 'PUT' : 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (response.ok) {
-                showAlert('Text Question entry saved successfully!', 'success');
-                // Additional logic to update the table or clear the form goes here
+        const url = textQuestionId ? `${base_url}/${textQuestionId}` : `${base_url}`;
+
+        if (textQuestionId) {
+          fetch(url, {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data) {
+              const textQuestionItem = document.getElementById(`text-question-id-${textQuestionId}`);
+              textQuestionItem.querySelector('.number').textContent = formData.get('number');
+              textQuestionItem.querySelector('.question').textContent = formData.get('question');
+              bootstrap.Modal.getInstance(document.getElementById('textQuestionModal')).hide();
+              showAlert('Text Question updated successfully.', 'success');
             } else {
                 throw new Error('Failed to save the text question');
             }
         })
-        .catch(error => {
-            showAlert(error.message, 'danger');
+          .catch(error => {
+              showAlert(error.message, 'danger');
+          });
+        } else {
+          console.log("were here as the id hasnt been set sad");
+        // Add new text question
+          fetch(url, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data) {
+              console.log(data);
+              const template = document.getElementById('textQuestionTemplate');
+              const clone = template.content.cloneNode(true);
+
+              clone.querySelector('.textQuestion-id').value = data.text_question_id;
+              clone.querySelector('.survey-id').value = formData.get('surveyId');
+              clone.querySelector('.number').textContent = formData.get('number');
+              clone.querySelector('.question').textContent = formData.get('question');
+              clone.querySelector('.response').textContent = formData.get('response');
+              bootstrap.Modal.getInstance(document.getElementById('textQuestionModal')).hide();
+              document.getElementById('textQuestionBody').appendChild(clone);
+              form.reset();
+              showAlert('Text Question added successfully. Refresh page to edit', 'success');
+            } else {
+              showAlert('Error adding education. Please try again.', 'danger');
+            }
+          })
+          .catch(error => {
+          console.error('Error:', error);
+          showAlert('Error adding text question. Please try again.', 'danger');
         });
+      }
     });
 
     // Handling delete operation with confirmation
