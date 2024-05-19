@@ -94,6 +94,25 @@ namespace App\Controllers;
         $data['users'] = $users;
         return view('admin', $data);
     }
+
+    public function surveyQuestions($survey_id)
+    {
+        $surveyModel = new \App\Models\SurveyModel();
+        // will need to add text question and multiple question models here
+        // maybe options model.
+
+        // Fetch survey details by survey id
+        $data['survey'] = $surveyModel->find($survey_id);
+
+        // Ensure user exists
+        if (!$$data['survey']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Survey Not Found');
+        }
+
+        print_r($data);
+
+        return view('surveyQuestions');
+    }
     
     public function account()
     {
@@ -118,11 +137,6 @@ namespace App\Controllers;
     public function signup()
     {
         return view('signup');
-    }
-
-    public function createSurvey()
-    {
-        
     }
 
     // controller to handle add/edit requests for users.
@@ -188,6 +202,7 @@ namespace App\Controllers;
      
          if ($this->request->getMethod() === 'POST') {
              $data = $this->request->getPost();
+             // currently hardset but will update when login setup.
              $userId = 5; // Get the current user's ID from the session
     
              if ($userId === null) {
@@ -211,6 +226,7 @@ namespace App\Controllers;
                  $survey = $surveyModel->find($surveyId);
                  $userId = $survey['user_id'];
                  $this->session->setFlashdata('success', $message);
+                 // This will redirect to addedit questions
                  return redirect()->to('/surveys/' . $userId);
              } else {
                  $this->session->setFlashdata('error', $message);
@@ -218,13 +234,7 @@ namespace App\Controllers;
              }
          }
      
-         $data['survey'] = ($id === null) ? null : $surveyModel->find($id);
-     
-         // Debug: Log $data['survey'] to the browser console
-         echo '<script>';
-         echo 'console.log(' . json_encode($data['survey']) . ')';
-         echo '</script>';
-     
+         $data['survey'] = ($id === null) ? null : $surveyModel->find($id); 
          return view('addeditSurvey', $data);
      }
      

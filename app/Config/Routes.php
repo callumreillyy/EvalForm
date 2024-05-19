@@ -27,12 +27,14 @@ $routes->group('admin', function($routes) {
     $routes->match(['get', 'post'], 'addedit/(:num)', 'EvalController::addedit/$1');
     $routes->get('delete/(:num)', 'EvalController::delete/$1');
 });
+
+$routes->get('/surveyQuestions/(:num)', 'EvalController::surveyQuestions/$1');
+
 $routes->get('/account', 'EvalController::account');
 $routes->get('/dashboard', 'EvalController::dashboard');
 $routes->get('/statistics', 'EvalController::statistics');
 $routes->get('/login', 'EvalController::login');
 $routes->get('/signup', 'EvalController::signup');
-$routes->get('/create-survey', 'EvalController::createSurvey');
 
 $routes->resource('survey');
 $routes->resource('textQuestion');
