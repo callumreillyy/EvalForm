@@ -57,8 +57,6 @@ namespace App\Controllers;
         $data['pager'] = $surveyModel->pager;
         $data['user_id'] = $user_id;
 
-        // make sure this is set in login!!
-        // reset user_id to the selected user for admin
         $this->session->set('user_id', $user_id);
 
         return view('surveys', $data);
@@ -108,8 +106,6 @@ namespace App\Controllers;
         $userModel = new \App\Models\UserModel();
         $surveyModel = new \App\Models\SurveyModel();
         $textQuestionModel = new \App\Models\TextQuestionModel();
-        // will need to add text question and multiple question models here
-        // maybe options model.
 
         // Fetch survey details by survey id
         $data['survey'] = $surveyModel->find($survey_id);
@@ -195,7 +191,6 @@ namespace App\Controllers;
      
          if ($this->request->getMethod() === 'POST') {
              $data = $this->request->getPost();
-             // currently hardset but will update when login setup.
              $userId = $this->session->get('user_id'); // Get the current user's ID from the session
     
              if ($userId === null) {
@@ -234,8 +229,6 @@ namespace App\Controllers;
      // User or admin can delete a survey from the dashboard.
      public function deleteSurvey($id)
      {
-        // need user id here to redirect
-        // issue is how do i get the current user id?
         $model = new \App\Models\SurveyModel();
 
         if ($model->delete($id)) {
