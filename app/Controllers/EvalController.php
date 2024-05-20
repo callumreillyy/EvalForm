@@ -126,29 +126,14 @@ namespace App\Controllers;
         return view('surveyQuestions', $data);
     }
     
-    public function account()
+    public function terms()
     {
-        return view('account');
+        return view('terms');
     }
 
-    public function dashboard()
+    public function privacy()
     {
-        return view('dashboard');
-    }
-
-    public function statistics()
-    {
-        return view('statistics');
-    }
-
-    public function login()
-    {
-        return view('login');
-    }
-
-    public function signup()
-    {
-        return view('signup');
+        return view('privacy');
     }
 
     // controller to handle add/edit requests for users.

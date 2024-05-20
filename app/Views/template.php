@@ -58,15 +58,15 @@
         <div class="container mx-auto flex justify-between items-center">
             <span class="text-sm">&copy; <?= date('Y') ?></span>
             <nav>
-              <a class="text-sm text-gray-300 hover:text-white mr-4 <?= service('router')->getMatchedRoute()[0] == '/' ? 'active' : ''; ?>" href="<?= base_url(); ?>">Home</a>
-              <a class="text-sm text-gray-300 hover:text-white mr-4 <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys/' . session()->get('userId')); ?>">Surveys</a>
+              <a class="text-sm text-gray-300 hover:text-white mr-4 text-decoration-none <?= service('router')->getMatchedRoute()[0] == '/' ? 'active' : ''; ?>" href="<?= base_url(); ?>">Home</a>
+              <a class="text-sm text-gray-300 hover:text-white mr-4 text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'surveys' ? 'active' : ''; ?>" href="<?= base_url('surveys/' . session()->get('userId')); ?>">Surveys</a>
               <?php if (session()->get('isLoggedIn')): ?>
-                <a class="text-sm text-gray-300 hover:text-white mr-4" href="<?= base_url("logout"); ?>">Logout</a>
+                <a class="text-sm text-gray-300 hover:text-white mr-4 text-decoration-none" href="<?= base_url("logout"); ?>">Logout</a>
               <?php else: ?>
-                <a class="text-sm text-gray-300 hover:text-white mr-4 <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url("login"); ?>">Login</a>
+                <a class="text-sm text-gray-300 hover:text-white mr-4 text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'login' ? 'active' : ''; ?>" href="<?= base_url("login"); ?>">Login</a>
               <?php endif; ?>
-              <a href="#" class="text-sm text-gray-300 hover:text-white mr-4">Privacy</a>
-              <a href="#" class="text-sm text-gray-300 hover:text-white mr-4">Terms</a>
+              <a class="text-sm text-gray-300 hover:text-white mr-4 text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'privacy' ? 'active' : ''; ?>" href="<?= base_url('privacy'); ?>">Privacy</a>
+              <a class="text-sm text-gray-300 hover:text-white mr-4 text-decoration-none <?= service('router')->getMatchedRoute()[0] == 'terms' ? 'active' : ''; ?>" href="<?= base_url('terms'); ?>">Terms</a>
             </nav>
         </div>
     </footer>

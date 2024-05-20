@@ -40,6 +40,11 @@ $routes->get('/login', 'Auth::google_login');  // Route to initiate Google login
 $routes->get('/login/callback', 'Auth::google_callback');  // Callback route after Google auth
 $routes->get('/logout', 'Auth::logout');
 
+// terms and privacy
+$routes->get('terms', 'EvalController::terms');
+$routes->get('privacy', 'EvalController::privacy');
+
+
 // RESTful api routes
 $routes->resource('survey');
 $routes->resource('textQuestion');
